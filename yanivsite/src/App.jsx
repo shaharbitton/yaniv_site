@@ -20,7 +20,6 @@ function Home() {
   return (
     <>
       <div className="hero">
-        <div className="hero-ph">מקום לתמונה (1600×600)</div>
         <h1>מנופי עפולה</h1>
         <p>שירותי משאית מנוף מקצועיים</p>
         <a className="btn" href={`tel:${PHONE}`}>התקשרו ליניב: {PHONE_DISPLAY}</a>

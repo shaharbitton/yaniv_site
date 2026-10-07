@@ -4,8 +4,7 @@ header{background:#111;position:sticky;top:0;z-index:10;display:flex;justify-con
 header .logo{color:#ffc107;font-size:1.5rem;font-weight:bold;text-decoration:none}
 nav a{color:#fff;text-decoration:none;margin-inline-start:18px}
 nav a:hover{color:#ffc107}
-.hero{position:relative;background:#cfd8dc;color:#263238;text-align:center;padding:90px 20px;border-bottom:3px dashed #90a4ae}
-.hero-ph{position:absolute;top:10px;inset-inline-start:14px;font-size:.9rem;color:#607d8b}
+.hero{position:relative;background:linear-gradient(rgba(0,0,0,.45),rgba(0,0,0,.45)),url(/track.jpg) center/cover no-repeat;color:#fff;text-align:center;padding:120px 20px}
 footer a{color:#ffc107}
 .hero h1{font-size:2.6rem;margin:0 0 10px}
 .btn{display:inline-block;background:#ffc107;color:#111;padding:14px 28px;border-radius:8px;font-weight:bold;text-decoration:none;border:0;font-size:1.1rem;cursor:pointer;margin:6px}
