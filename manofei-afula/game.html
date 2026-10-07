@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>משחק המנוף – מנופי עפולה</title><link rel="stylesheet" href="style.css"></head><body>
+<header><a class="logo" href="index.html">מנופי עפולה</a>
+<nav><a href="index.html">בית</a><a href="gallery.html">גלריה</a><a href="game.html">משחק</a><a href="contact.html">צור קשר</a></nav></header>
+<section style="text-align:center"><h2>משחק המנוף</h2>
+<p>חצים ימינה/שמאלה – הזזת המנוף | חץ למטה/למעלה – הורדה/הרמה | רווח – תפוס/שחרר.<br>העבירו את הארגז למשטח הירוק בלי לגעת במכשולים!</p>
+<canvas id="game" width="900" height="480"></canvas>
+<div id="msg"></div>
+<button class="btn" id="restart">התחל מחדש</button>
+<div id="mobile">
+<button class="btn" data-k="ArrowRight">◀</button><button class="btn" data-k="ArrowLeft">▶</button>
+<button class="btn" data-k="ArrowUp">▲</button><button class="btn" data-k="ArrowDown">▼</button>
+<button class="btn" id="grab">תפוס/שחרר</button></div></section>
+<footer>© מנופי עפולה – יניב | 052-410-2787</footer>
+<a class="call" href="tel:0524102787">📞 התקשר עכשיו</a>
+<script>
+const cv=document.getElementById('game'),c=cv.getContext('2d'),msg=document.getElementById('msg');
+const GY=420;
+const obstacles=[{x:380,y:260,w:30,h:160,t:'קיר'},{x:560,y:200,w:120,h:14,t:'חוטי חשמל'}];
+const goal={x:760,w:110};
+let s;
+function reset(){cv.style.transform='';msg.textContent='';
+s={cx:120,hy:120,box:{x:230,y:GY-40,w:50,h:40},held:false,over:false,won:false}}
+const keys={};
+onkeydown=e=>{keys[e.key]=true;if(e.key==' '){e.preventDefault();toggle()}if(e.key.startsWith('Arrow'))e.preventDefault()};
+onkeyup=e=>keys[e.key]=false;
+function toggle(){if(s.over||s.won)return;const b=s.box;
+ if(s.held){s.held=false}
+ else if(Math.abs(b.x+b.w/2-s.cx)<30&&Math.abs(b.y-s.hy)<25)s.held=true}
+document.getElementById('grab').onclick=toggle;
+document.querySelectorAll('[data-k]').forEach(b=>{const k=b.dataset.k;
+ b.onpointerdown=()=>keys[k]=true;b.onpointerup=b.onpointerleave=()=>keys[k]=false});
+document.getElementById('restart').onclick=reset;
+function hit(a,b){return a.x<b.x+b.w&&a.x+a.w>b.x&&a.y<b.y+b.h&&a.y+a.h>b.y}
+function fail(){s.over=true;s.held=false;cv.style.transform='rotate(12deg)';
+ msg.textContent='המשאית התהפכה! תן למקצוענים לטפל לך בזה – 052-410-2787'}
+function update(){if(s.over||s.won)return;
+ if(keys.ArrowLeft)s.cx-=3;if(keys.ArrowRight)s.cx+=3;
+ if(keys.ArrowUp)s.hy-=3;if(keys.ArrowDown)s.hy+=3;
+ s.cx=Math.max(20,Math.min(880,s.cx));s.hy=Math.max(60,Math.min(GY,s.hy));
+ const b=s.box;
+ if(s.held){b.x=s.cx-b.w/2;b.y=s.hy;
+  for(const o of obstacles)if(hit(b,o))return fail();
+  if(b.y+b.h>GY+1)return fail();
+ }else if(b.y+b.h<GY){b.y=Math.min(GY-b.h,b.y+5)}
+ if(!s.held&&b.y+b.h>=GY&&b.x>goal.x&&b.x+b.w<goal.x+goal.w){s.won=true;msg.style.color='green';msg.textContent='כל הכבוד! עכשיו תתקשר ליניב לעבודה אמיתית 😉'}
+ else msg.style.color='#c00'}
+function draw(){c.clearRect(0,0,900,480);
+ c.fillStyle='#6b8e23';c.fillRect(0,GY,900,60);
+ c.fillStyle='#4caf50';c.fillRect(goal.x,GY,goal.w,8);
+ c.fillStyle='#333';c.font='16px Arial';c.fillText('יעד',goal.x+40,GY+30);
+ for(const o of obstacles){c.fillStyle=o.w>50?'#d32f2f':'#777';c.fillRect(o.x,o.y,o.w,o.h);c.fillStyle='#000';c.fillText(o.t,o.x,o.y-6)}
+ c.fillStyle='#ffc107';c.fillRect(20,GY-50,90,50);c.fillRect(20,GY-90,40,40);
+ c.strokeStyle='#ffa000';c.lineWidth=8;c.beginPath();c.moveTo(40,GY-80);c.lineTo(40,60);c.lineTo(900,60);c.stroke();
+ c.lineWidth=2;c.strokeStyle='#000';c.beginPath();c.moveTo(s.cx,60);c.lineTo(s.cx,s.hy);c.stroke();
+ c.fillStyle='#000';c.fillRect(s.cx-8,s.hy-6,16,8);
+ const b=s.box;c.fillStyle='#8d6e63';c.fillRect(b.x,b.y,b.w,b.h);c.strokeRect(b.x,b.y,b.w,b.h)}
+function loop(){update();draw();requestAnimationFrame(loop)}
+reset();loop();
+</script></body></html>

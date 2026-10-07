@@ -1,0 +1,6 @@
+<Solution>
+  <Project Path="YanivSite/yanivsite.esproj">
+    <Build />
+    <Deploy />
+  </Project>
+</Solution>

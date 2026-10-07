@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>צור קשר – מנופי עפולה</title><link rel="stylesheet" href="style.css"></head><body>
+<header><a class="logo" href="index.html">מנופי עפולה</a>
+<nav><a href="index.html">בית</a><a href="gallery.html">גלריה</a><a href="game.html">משחק</a><a href="contact.html">צור קשר</a></nav></header>
+<section><h2>צור קשר</h2>
+<p>יניב – <a href="tel:0524102787">052-410-2787</a></p>
+<form id="f">
+<input id="name" placeholder="שם מלא" required>
+<input id="phone" type="tel" placeholder="טלפון" required>
+<textarea id="text" rows="4" placeholder="מה צריך להרים?"></textarea>
+<button class="btn" type="submit">שלח בוואטסאפ</button></form></section>
+<script>
+document.getElementById('f').onsubmit=e=>{e.preventDefault();
+const t=`שלום יניב, אני ${name.value}, טלפון ${phone.value}. ${text.value}`;
+location.href='https://wa.me/972524102787?text='+encodeURIComponent(t)};
+</script>
+<footer>© מנופי עפולה – יניב | 052-410-2787</footer></body></html>
